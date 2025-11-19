@@ -24,7 +24,8 @@ pnpm dev
 En la raíz del proyecto encontrarás un archivo de plantilla para las variables de entorno:
 
 - [.env.template](./.env.template)
- → Debes copiarlo y renombrarlo como [.env](./.env)
+  → Debes copiarlo y renombrarlo como [.env](./.env)
+- Luego remplaza los valores de las variables por los que corresponden
 
 ## 🖼️ Logo del cliente
 
@@ -34,7 +35,7 @@ Para usar un logo personalizado, guarda el archivo en la carpeta [public](./publ
 
 Si el archivo no está en formato `.svg`, debes modificar las importaciones en los siguientes archivos:
 
-- [Navbar](./src/components/layout/components/Navbar.tsx) 
+- [Navbar](./src/components/layout/components/Navbar.tsx)
 - [Login](./src/pages/login/index.tsx)
 
 Ejemplo de cambio:
@@ -51,4 +52,29 @@ import logo from "/logo.png";
 
 Si deseas modificar los estilos globales de la aplicación, puedes hacerlo en el archivo:
 
-- [theme.tsx](./src/components/layout/theme.tsx)
+- [Theme](./src/components/layout/theme.tsx)
+
+## 📲 PWA y sus iconos
+
+### PWA
+
+Para personalizar nombre de la PWA debe modificar los campos respectivos en el archivo [Manifest](./public/manifest.json)
+
+```json
+{
+  "name": "Nombre PWA",
+  "short_name": "Nombre corto PWA",
+  ...
+}
+```
+
+### Iconos
+
+Para usar un icono personalizado, debe remplazar los archivo en la carpeta [public](./public) conservando sus respectivos tamaños y nombres:
+
+> `pwa-192x192.png` > `pwa-192x192.png`
+
+Si el archivo no está en formato `.png` y/o tiene otro nombre, debes modificar las importaciones/referencias en los siguientes archivos:
+
+- [Manifest](./public/manifest.json)
+- [Service Worker](./src/sw.js)

@@ -72,7 +72,8 @@ Para personalizar nombre de la PWA debe modificar los campos respectivos en el a
 
 Para usar un icono personalizado, debe remplazar los archivo en la carpeta [public](./public) conservando sus respectivos tamaños y nombres:
 
-> `pwa-192x192.png` > `pwa-192x192.png`
+> `pwa-192x192.png` 
+> `pwa-192x192.png`
 
 Si el archivo no está en formato `.png` y/o tiene otro nombre, debes modificar las importaciones/referencias en los siguientes archivos:
 

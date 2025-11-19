@@ -1,0 +1,58 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "baseUrl": "./src/",
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "lib": [
+      "dom",
+      "esnext"
+    ],
+    "importHelpers": true,
+    "noImplicitAny": true,
+    "alwaysStrict": true,
+    "allowImportingTsExtensions": false,
+    // output .d.ts declaration files for consumers
+    "declaration": false,
+    "sourceMap": false,
+    "paths": {
+      "@components/*": [
+        "./components/*"
+      ],
+      "@routes/*": [
+        "./routes/*"
+      ],
+      "@utils/*": [
+        "./utils/*"
+      ],
+      "@pages/*": [
+        "./pages/*"
+      ],
+      "@services/*": [
+        "./services/*"
+      ],
+      "@redux/*": [
+        "./redux/*"
+      ],
+      "@/*": [
+        "./*"
+      ],
+    }
+  },
+  "include": [
+    "src",
+    "src/registerSw.ts"
+  ],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
+}

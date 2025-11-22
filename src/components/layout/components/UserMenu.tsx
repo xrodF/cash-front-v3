@@ -10,6 +10,8 @@ import {
   Box,
   SxProps,
   Backdrop,
+  alpha,
+  useTheme,
 } from "@mui/material";
 
 import { NavigateFunction, useNavigate } from "react-router-dom";
@@ -17,6 +19,8 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import LogoutIcon from "@mui/icons-material/Logout";
+import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
+
 import { stringAvatar } from "@/utils/string-tratament";
 import { useGlobalContext } from "@/context/global";
 import { handleConfirm } from "@utils/handleConfirm";
@@ -37,15 +41,42 @@ interface SubMenuItem {
   icon: React.ReactNode;
   borderTop?: boolean;
   sx?: SxProps;
+  sxIcon?: SxProps;
   disabled?: boolean;
 }
 
 const UserMenu: FC<MenuProps> = ({ anchorElUser, handleCloseUserMenu }) => {
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const { global_context } = useGlobalContext();
 
   const options: SubMenuItem[] = [
+    {
+      text: "Abrir pantalla secundaria",
+      action: async () => {
+        const url = "/customer-display";
+        window.open(url, "_blank", "noopener,noreferrer");
+      },
+      icon: <OpenInBrowserIcon />,
+      sx: {
+        justifyContent: "space-between",
+
+        "& .MuiTypography-root": {
+          fontWeight: 600,
+        },
+
+        "&:hover": {
+          backgroundColor: alpha(theme.palette.info.dark, 0.9),
+          color: "#fff",
+        },
+      },
+      sxIcon: {
+        bgcolor: "info.dark",
+      },
+    },
+
     {
       text: "Cerrar sesión",
       action: async () => {
@@ -58,12 +89,20 @@ const UserMenu: FC<MenuProps> = ({ anchorElUser, handleCloseUserMenu }) => {
       icon: <LogoutIcon />,
       borderTop: true,
       sx: {
-        backgroundColor: "error.dark",
-        color: "common.white",
+        justifyContent: "space-between",
+        bgcolor: "error.dark",
+
+        "& .MuiTypography-root": {
+          fontWeight: 600,
+        },
 
         "&:hover": {
-          backgroundColor: "error.light",
+          backgroundColor: alpha(theme.palette.error.dark, 0.9),
+          color: "#fff",
         },
+      },
+      sxIcon: {
+        bgcolor: "transparent",
       },
     },
   ];
@@ -136,7 +175,7 @@ const UserMenu: FC<MenuProps> = ({ anchorElUser, handleCloseUserMenu }) => {
         </Paper>
 
         {options.map(
-          ({ action, icon, text, borderTop, disabled, sx }, index) => (
+          ({ action, icon, text, borderTop, disabled, sx, sxIcon }, index) => (
             <Box key={`option-user-menu-${index}`}>
               {(borderTop || index === 0) && <Divider sx={{ my: 0.75 }} />}
 
@@ -151,11 +190,31 @@ const UserMenu: FC<MenuProps> = ({ anchorElUser, handleCloseUserMenu }) => {
                   alignItems: "center",
                   gap: 2,
                   borderRadius: 1,
+                  pl: 0,
                   ...sx,
                 }}
                 disabled={disabled ?? false}
               >
-                {icon}
+                <Box
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    borderRadius: 1,
+                    bgcolor: "primary.dark",
+                    padding: 0.75,
+                    width: 32,
+                    height: 32,
+                    ml: 1,
+                    ...sxIcon,
+                    ...(disabled && {
+                      bgcolor: "divider",
+                    }),
+                  }}
+                >
+                  {icon}
+                </Box>
+
                 <Typography textAlign="center">{text}</Typography>
               </MenuItem>
             </Box>

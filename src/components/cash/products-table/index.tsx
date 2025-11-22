@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 
 import {
   MaterialReactTable,
@@ -6,9 +6,13 @@ import {
   type MRT_ColumnDef,
 } from "material-react-table";
 
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { CustomPaper, StyledButton } from "@components/shared/styled";
-import { InfoItem, MoreItemsIndicator } from "./styled";
+import {
+  CashRegisterIconPlaceholder,
+  InfoItem,
+  MoreItemsIndicator,
+} from "./styled";
 
 import { useVerticalScrollObserver } from "@utils/UseVerticalScrollObserver";
 
@@ -18,7 +22,11 @@ type Item = {
   quantity: number;
 };
 
-const ProductsTable = () => {
+interface TableProps {
+  onlyView?: boolean;
+}
+
+const ProductsTable: FC<TableProps> = ({ onlyView = false }) => {
   const data = useState<Item[]>([]);
 
   const columns: MRT_ColumnDef<Item>[] = [
@@ -57,22 +65,7 @@ const ProductsTable = () => {
     enableColumnResizing: false,
     enableTableHead: data[0].length > 0,
 
-    renderEmptyRowsFallback: () => (
-      <Box
-        sx={{
-          textAlign: "center",
-
-          height: "100%",
-
-          "& .MuiTypogrphy-root": {
-            color: "grey.600",
-            fontWeight: 600,
-          },
-        }}
-      >
-        <Typography variant="body1">No hay registros disponibles</Typography>
-      </Box>
-    ),
+    renderEmptyRowsFallback: () => <CashRegisterIconPlaceholder />,
 
     muiTablePaperProps: {
       sx: {
@@ -124,7 +117,7 @@ const ProductsTable = () => {
         height: "100%",
       }}
     >
-      <StyledButton onClick={handleAddRow}>Agregar</StyledButton>
+      {!onlyView && <StyledButton onClick={handleAddRow}>Agregar</StyledButton>}
 
       <Box
         sx={{

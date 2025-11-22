@@ -13,7 +13,7 @@ const CustomerDisplay = () => {
           flexDirection: "column  ",
         }}
       >
-        <ProductsTable />
+        <ProductsTable onlyView />
       </Box>
     </Fragment>
   );
